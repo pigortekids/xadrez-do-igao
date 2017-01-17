@@ -1,0 +1,705 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void exibir(char[][16]);
+void mov(char[][16], int, int, int, int, int[]);
+void mov1(char[][16], int, int, int, int, int[]);
+void troca(char, char, char[], char[], int, int, int[], int[]);
+void mov2(char[][16], char, int, char, int, int[], int[], char[], int[], char[], int[]);
+int fim(char[][16]);
+int random_number(int, int);
+
+void main(){
+    int i, j, y1, y2, y3[1], y4[1], p, rei[1], t[1], t1, e, pc[1], r[4];
+    char tab[8][16], x1, x2, x3[1], x4[1], h[1];
+    h[0] = 's';
+    t[0] = 0;
+    y3[0] = 0;
+    y4[0] = 0;
+    x3[0] = 'n';
+    x4[0] = 'n';
+    rei[0] = 0;
+    /*Desing do começo do jogo*/
+    printf(" ------------------------------------- \n| O   O   O   OOO   OOOOO OOOOO OOOOO |\n");
+    printf("|  O O   O O  O  O  O   O O        O  |\n|   O    OOO  O   O OOOOO OOOOO   O   |\n");
+    printf("|  O O  O   O O  O  OOO   O      O    |\n| O   O O   O OOO   O  OO OOOOO OOOOO |\n");
+    printf("|                                     |\n|             OOO   OOOOO             |\n");
+    printf("|             O  O  O   O             |\n|             O   O O   O             |\n");
+    printf("|             O  O  O   O             |\n|             OOO   OOOOO             |\n");
+    printf("|                                     |\n|                  O O                |\n");
+    printf("|                 O O O               |\n|                                     |\n");
+    printf("|         O OOOOO   O   OOOOO         |\n|         O O      O O  O   O         |\n");
+    printf("|         O O OOO  OOO  O   O         |\n|         O O   O O   O O   O         |\n");
+    printf("|         O OOOOO O   O OOOOO         |\n -------------------------------------\n\n");
+    printf("Clique enter para continuar");
+    fgets(p, 100, stdin);
+    system("cls");
+    printf("        INSTRUCOES:\n              '\n\n");
+    printf("   -Primeira letra = tipo:\n\n      P = piao\n      T = torre\n      ");
+    printf("C = cavalo\n      B = bispo\n      D = dama\n      R = rei\n\n\n");
+    printf("   -Segunda letra = cor:\n\n      b = branca\n      p = preta\n\n");
+    printf("-Se nao souber oque fazer, clique enter, ou algumas teclas depois enter\n\n\n\n\nClique enter para continuar\n");
+    fgets(p, 100, stdin);
+    system("cls");
+    /*começo do jogo*/
+    while(h[0] == 's'){
+        for(i=2;i<6;i++){
+            for(j=0;j<16;j++){
+                tab[i][j] = 'O';
+            }
+        }
+        for(j=0;j<16;j++){
+            if((j==0) || (j==14)){
+                tab[0][j]='T';
+                tab[7][j]='T';
+        }
+            else if((j==2) || (j==12)){
+                tab[0][j]='C';
+                tab[7][j]='C';
+            }
+            else if((j==4) || (j==10)){
+                tab[0][j]='B';
+                tab[7][j]='B';
+            }
+            else if(j==6){
+                tab[0][j]='D';
+                tab[7][j]='D';
+            }
+            else if(j==8){
+                tab[0][j]='R';
+                tab[7][j]='R';
+            }
+            else if((j==1) || (j==3) || (j==5) || (j==7) || (j==9) || (j==11) || (j==13) || (j==15)){
+                tab[0][j]='p';
+                tab[1][j]='p';
+                tab[6][j]='b';
+                tab[7][j]='b';
+            }
+        }
+        for(j=0;j<16;j++){
+            if((j==0) || (j==2) || (j==4) || (j==6) || (j==8) || (j==10) || (j==12) || (j==14)){
+                tab[1][j]='P';
+                tab[6][j]='P';
+            }
+        }
+        printf("       Deseja jogar 1v1?                    [digite 1]\n\nContra o computador com as pecas pretas?    [digite 2]\n");
+        printf("                             '\n\n");
+        printf("Contra o computador com as pecas brancas?   [digite 3]\n");
+        printf("                             '\n");
+        scanf("%i", &e);
+        fflush(stdin);
+        system("cls");
+        if(e == 1){
+            t[0] = 0;
+            while((fim(tab)) == 5){
+                exibir(tab);
+                printf("ultimo movimento: %c%i --> %c%i\n\n-Digite um movimento:", x3[0], y3[0], x4[0], y4[0]);
+                printf("\n[letra depois numero, enter, letra depois numero, enter(letras minusculas)]\n");
+                scanf("%c%i", &x1, &y1);
+                fflush(stdin);
+                scanf("%c%i", &x2, &y2);
+                if((x1 == x2) && (y1 == y2)){
+                    fflush(stdin);
+                    system("cls");
+                    printf("Movimento de mesma casa para mesma casa, invalido");
+                }
+                else if((x1>='a') && (x1<='h') && (y1>=1) && (y1<=8) && (x2>='a') && (x2<='h') && (y2>=1) && (y2<=8)){
+                    system("cls");
+                    mov2(tab, x1, y1, x2, y2, rei, t, x3, y3, x4, y4);
+                }
+                else{
+                    fflush(stdin);
+                    system("cls");
+                    printf("Movimento com valorez invalidos");
+                }
+                fgets(p, 100, stdin);
+                system("cls");
+            }
+            if((fim(tab))==3){
+                printf("Xeque-Mate do branco\n");
+                fgets(p, 100, stdin);
+                system("cls");
+            }
+            else{
+                printf("Xeque-Mate do preto\n");
+                fgets(p, 100, stdin);
+                system("cls");
+            }
+            printf("Deseja continuar jogando?\n['s' para sim e qualquer valor para nao]\n");
+            scanf("%c", &h[0]);
+            system("cls");
+        }
+        else if(e == 2){
+            pc[0] = 0;
+            t[0] = 0;
+            while((fim(tab)) == 5){
+                exibir(tab);
+                t1 = t[0]%2;
+                if(t1 == 0){
+                    printf("ultimo movimento: %c%i --> %c%i\n\n-Digite um movimento:", x3[0], y3[0], x4[0], y4[0]);
+                    printf("\n[letra depois numero, enter, letra depois numero, enter(letras minusculas)]\n");
+                    scanf("%c%i", &x1, &y1);
+                    fflush(stdin);
+                    scanf("%c%i", &x2, &y2);
+                    if((x1 == x2) && (y1 == y2)){
+                        fflush(stdin);
+                        system("cls");
+                        printf("Movimento de mesma casa para mesma casa, invalido");
+                    }
+                    else if((x1>='a') && (x1<='h') && (y1>=1) && (y1<=8) && (x2>='a') && (x2<='h') && (y2>=1) && (y2<=8)){
+                        system("cls");
+                        mov2(tab, x1, y1, x2, y2, rei, t, x3, y3, x4, y4);
+                    }
+                    else{
+                        fflush(stdin);
+                        system("cls");
+                        printf("Movimento com valorez invalidos");
+                    }
+                    fgets(p, 100, stdin);
+                    system("cls");
+                    pc[0] = 0;
+                }
+                else{
+                    for(i=0;i<4;i++){
+                        r[i] = rand()%8;
+                    }
+                    x1 = r[0] + 97;
+                    x2 = r[1] + 97;
+                    y1 = r[2] + 1;
+                    y2 = r[3] + 1;
+                    mov2(tab, x1, y1, x2, y2, rei, t, x3, y3, x4, y4);
+                    system("cls");
+                    printf("numero de randons que o pc fez: %i\n", pc[0]);
+                    pc[0]+=1;
+                }
+            }
+            if((fim(tab))==3){
+                printf("Xeque-Mate, voce ganhou\n");
+                fgets(p, 100, stdin);
+                system("cls");
+            }
+            else{
+                printf("Xeque-Mate, voce perdeu\n");
+                fgets(p, 100, stdin);
+                system("cls");
+            }
+            printf("Deseja continuar jogando?\n['s' para sim e qualquer valor para nao]\n");
+            scanf("%c", &h[0]);
+            system("cls");
+        }
+        else if(e == 3){
+            pc[0] = 0;
+            t[0] = 0;
+            while((fim(tab)) == 5){
+                exibir(tab);
+                t1 = t[0]%2;
+                if(t1 != 0){
+                    printf("ultimo movimento: %c%i --> %c%i\n\n-Digite um movimento:", x3[0], y3[0], x4[0], y4[0]);
+                    printf("\n[letra depois numero, enter, letra depois numero, enter(letras minusculas)]\n");
+                    scanf("%c%i", &x1, &y1);
+                    fflush(stdin);
+                    scanf("%c%i", &x2, &y2);
+                    if((x1 == x2) && (y1 == y2)){
+                        fflush(stdin);
+                        system("cls");
+                        printf("Movimento de mesma casa para mesma casa, invalido");
+                    }
+                    else if((x1>='a') && (x1<='h') && (y1>=1) && (y1<=8) && (x2>='a') && (x2<='h') && (y2>=1) && (y2<=8)){
+                        system("cls");
+                        mov2(tab, x1, y1, x2, y2, rei, t, x3, y3, x4, y4);
+                    }
+                    else{
+                        fflush(stdin);
+                        system("cls");
+                        printf("Movimento com valorez invalidos");
+                    }
+                    fgets(p, 100, stdin);
+                    system("cls");
+                    pc[0] = 0;
+                }
+                else{
+                    for(i=0;i<4;i++){
+                        r[i] = rand()%8;
+                    }
+                    x1 = r[0] + 97;
+                    x2 = r[1] + 97;
+                    y1 = r[2] + 1;
+                    y2 = r[3] + 1;
+                    mov2(tab, x1, y1, x2, y2, rei, t, x3, y3, x4, y4);
+                    system("cls");
+                    printf("numero de randons que o pc fez: %i\n", pc[0]);
+                    pc[0]+=1;
+                }
+            }
+            if((fim(tab))==3){
+                printf("Xeque-Mate, voce perdeu\n");
+                fgets(p, 100, stdin);
+                system("cls");
+            }
+            else{
+                printf("Xeque-Mate, voce ganhou\n");
+                fgets(p, 100, stdin);
+                system("cls");
+            }
+            printf("Deseja continuar jogando?\n['s' para sim e qualquer valor para nao]\n");
+            scanf("%c", &h[0]);
+            system("cls");
+        }
+    }
+}
+
+/*função para a exibição do tabuleiro na tela*/
+void exibir(char tab[][16]){
+    int i, j, k;
+    char l;
+    k=8;
+    for(i=0;i<8;i++){
+        for(j=0;j<16;j++){
+            printf("%c", tab[i][j]);
+            j = j + 1;
+            printf("%c ", tab[i][j]);
+        }
+        printf("   %i\n\n", k--);
+    }
+    printf("\n");
+    l = 'a';
+    for(i=0;i<8;i++){
+        printf("%c  ", l++);
+    }
+    printf("\n\n");
+}
+
+/*primeiro função basica para o movimento das peças*/
+void mov(char tab[][16], int j1, int i1, int j2, int i2, int t[]){
+    j1 = j1 + 1;
+    j2 = j2 + 1;
+    if(tab[i1][j1] == tab[i2][j2]){
+        fflush(stdin);
+        printf("Movimento invalido");
+    }
+    else{
+        j1 = j1 - 1;
+        j2 = j2 - 1;
+        tab[i2][j2] = tab[i1][j1];
+        tab[i1][j1] = 'O';
+        j2+=1;
+        j1+=1;
+        tab[i2][j2] = tab[i1][j1];
+        tab[i1][j1] = 'O';
+        t[0] += 1;
+    }
+}
+
+/*função para conferir se tem pessas entre o movimento*/
+void mov1(char tab[][16], int j1, int i1, int j2, int i2, int t[]){
+    int i, j, i3, j3, c, l;
+    j = j2-j1;
+    i = i2-i1;
+    c = 0;
+    if((j!=0) && (i!=0)){
+        if((j > 0) && (i > 0)){
+            j3 = j2 - 2;
+            i3 = i2 - 1;
+            while(i3 != i1){
+                if(tab[i3][j3] != 'O'){
+                    c += 1;
+                }
+                j3 -= 2;
+                i3 -= 1;
+            }
+        }
+        else if((j > 0) && (i < 0)){
+            j3 = j2 - 2;
+            i3 = i2 + 1;
+            while(i3 != i1){
+                if(tab[i3][j3] != 'O'){
+                    c += 1;
+                }
+                j3 -= 2;
+                i3 += 1;
+            }
+        }
+        else if((j < 0) && (i > 0)){
+            j3 = j2 + 2;
+            i3 = i2 - 1;
+            while(i3 != i1){
+                if(tab[i3][j3] != 'O'){
+                    c += 1;
+                }
+                j3 += 2;
+                i3 -= 1;
+            }
+        }
+        else if((j < 0) && (i < 0)){
+            j3 = j2 + 2;
+            i3 = i2 + 1;
+            while(i3 != i1){
+                if(tab[i3][j3] != 'O'){
+                    c += 1;
+                }
+                j3 += 2;
+                i3 += 1;
+            }
+        }
+    }
+    else if((j!=0) && (i==0)){
+        if(j > 0){
+            j3 = j2 - 2;
+            while(j3!=j1){
+                if(tab[i2][j3] != 'O'){
+                    c += 1;
+                }
+                j3 -= 2;
+            }
+        }
+        else if(j < 0){
+            j3 = j2 + 2;
+            while(j3!=j1){
+                if(tab[i2][j3] != 'O'){
+                    c += 1;
+                }
+                j3 += 2;
+            }
+        }
+    }
+    else if((j==0) && (i!=0)){
+        if(i > 0){
+            i3 = i2 - 1;
+            while(i3!=i1){
+                if(tab[i3][j2] != 'O'){
+                    c += 1;
+                }
+                i3 -= 1;
+            }
+        }
+        else if(i < 0){
+            i3 = i2 + 1;
+            while(i3!=i1){
+                if(tab[i3][j2] != 'O'){
+                    c += 1;
+                }
+                i3 += 1;
+            }
+        }
+    }
+    if(c==0){
+        mov(tab, j1, i1, j2, i2, t);
+    }
+    else{
+        fflush(stdin);
+        printf("Movimento invalido");
+    }
+}
+
+/*função pra evitar muitas linhas*/
+void troca(char x1, char x2, char x3[], char x4[], int y1, int y2, int y3[], int y4[]){
+    x3[0] = x1;
+    x4[0] = x2;
+    y3[0] = y1;
+    y4[0] = y2;
+}
+
+/*função mais avançada do movimento das peças*/
+void mov2(char tab[][16], char j1, int i1, char j2, int i2, int rei[], int t[], char x1[], int y1[], char x2[], int y2[]){
+    int j3, i3, j4, i4, t1, k[1], c;
+    char p;
+    c = 0;
+    k[0] = 0;
+    switch(j1){
+        case 'a': j3 = 0; break;
+        case 'b': j3 = 2; break;
+        case 'c': j3 = 4; break;
+        case 'd': j3 = 6; break;
+        case 'e': j3 = 8; break;
+        case 'f': j3 = 10; break;
+        case 'g': j3 = 12; break;
+        case 'h': j3 = 14; break;
+    }
+    switch(j2){
+        case 'a': j4 = 0; break;
+        case 'b': j4 = 2; break;
+        case 'c': j4 = 4; break;
+        case 'd': j4 = 6; break;
+        case 'e': j4 = 8; break;
+        case 'f': j4 = 10; break;
+        case 'g': j4 = 12; break;
+        case 'h': j4 = 14; break;
+    }
+    switch(i1){
+        case 8: i3 = 0; break;
+        case 7: i3 = 1; break;
+        case 6: i3 = 2; break;
+        case 5: i3 = 3; break;
+        case 4: i3 = 4; break;
+        case 3: i3 = 5; break;
+        case 2: i3 = 6; break;
+        case 1: i3 = 7; break;
+    }
+    switch(i2){
+        case 8: i4 = 0; break;
+        case 7: i4 = 1; break;
+        case 6: i4 = 2; break;
+        case 5: i4 = 3; break;
+        case 4: i4 = 4; break;
+        case 3: i4 = 5; break;
+        case 2: i4 = 6; break;
+        case 1: i4 = 7; break;
+    }
+    j3 += 1;
+    t1 = ((t[0])%2);
+    if(tab[i3][j3] == 'O'){
+        fflush(stdin);
+        printf("Primeira casa escolhida sem peca\n                              '");
+    }
+    else if(((tab[i3][j3] == 'b') && (t1 == 0)) || ((tab[i3][j3] == 'p') && (t1 != 0))){
+        j3 -= 1;
+        if(tab[i3][j3] == 'P'){               /*movimento para o pião*/
+            j3 = j3 + 1;
+            if(tab[i3][j3] == 'b'){
+                j3 = j3 - 1;
+                if(abs(i4-i3)>2){
+                    fflush(stdin);
+                    printf("Movimento invalido");
+                }
+                else if(i3 == 6 && (j4-j3) == 0 && (i4-i3)<0 && tab[i4][j4] == 'O'){
+                    mov1(tab, j3, i3, j4, i4, t);
+                    troca(j1, j2, x1, x2, i1, i2, y1, y2);
+                }
+                else if(i4 == 0){
+                    mov1(tab, j3, i3, j4, i4, t);
+                    troca(j1, j2, x1, x2, i1, i2, y1, y2);
+                    system("cls");
+                    while(c==0){
+                        printf("Para que peça quer trocar?\n[T, C, B ou D]\n");
+                        fflush(stdin);
+                        scanf("%c", &p);
+                        switch(p){
+                            case 'T': tab[i4][j4] = 'T';
+                                c=1; break;
+                            case 'C': tab[i4][j4] = 'C';
+                                c=1; break;
+                            case 'B': tab[i4][j4] = 'B';
+                                c=1; break;
+                            case 'D': tab[i4][j4] = 'D';
+                                c=1; break;
+                            default: system("cls");
+                                fflush(stdin);
+                                printf("Valor digitado nao possivel\n"); break;
+                        }
+                    }
+                }
+                else{
+                    if((i4-i3)>0){
+                        fflush(stdin);
+                        printf("Movimento invalido");
+                    }
+                    else if(abs(j4-j3) == 2 && (i4-i3) == -1){
+                        if(tab[i4][j4] != 'O' && ((i4-i3) != 0)){
+                            mov1(tab, j3, i3, j4, i4, t);
+                            troca(j1, j2, x1, x2, i1, i2, y1, y2);
+                        }
+                        else{
+                            fflush(stdin);
+                            printf("Movimento invalido");
+                        }
+                    }
+                    else if((j4-j3) == 0){
+                        if(tab[i4][j4] != 'O'){
+                            fflush(stdin);
+                            printf("Movimento invalido");
+                        }
+                        else if(abs(i4-i3) > 1){
+                            fflush(stdin);
+                            printf("Movimento invalido");
+                        }
+                        else{
+                            mov1(tab, j3, i3, j4, i4, t);
+                            troca(j1, j2, x1, x2, i1, i2, y1, y2);
+                        }
+                    }
+                }
+            }
+            else{
+                j3 = j3 - 1;
+                if(abs(i4-i3)>2){
+                    fflush(stdin);
+                    printf("Movimento invalido");
+                }
+                else if(i3 == 1 && (j4-j3) == 0 && (i4-i3)>0 && tab[i4][j4] == 'O'){
+                    mov1(tab, j3, i3, j4, i4, t);
+                    troca(j1, j2, x1, x2, i1, i2, y1, y2);
+                }
+                 else if(i4 == 7){
+                    mov1(tab, j3, i3, j4, i4, t);
+                    troca(j1, j2, x1, x2, i1, i2, y1, y2);
+                    system("cls");
+                    while(c==0){
+                        printf("Para que peça quer trocar?\n[T, C, B ou D]\n");
+                        fflush(stdin);
+                        scanf("%c", &p);
+                        switch(p){
+                            case 'T': tab[i4][j4] = 'T';
+                                c=1; break;
+                            case 'C': tab[i4][j4] = 'C';
+                                c=1; break;
+                            case 'B': tab[i4][j4] = 'B';
+                                c=1; break;
+                            case 'D': tab[i4][j4] = 'D';
+                                c=1; break;
+                            default: system("cls");
+                                fflush(stdin);
+                                printf("Valor digitado nao possivel\n"); break;
+                        }
+                    }
+                }
+                else{
+                    if((i4-i3)<0){
+                        fflush(stdin);
+                        printf("Movimento invalido");
+                    }
+                    else if(abs(j4-j3) == 2){
+                        if(tab[i4][j4] != 'O' && ((i4-i3) == 1)){
+                            mov1(tab, j3, i3, j4, i4, t);
+                            troca(j1, j2, x1, x2, i1, i2, y1, y2);
+                        }
+                        else{
+                            fflush(stdin);
+                            printf("Movimento invalido");
+                        }
+                    }
+                    else if((j4-j3) == 0){
+                        if(tab[i4][j4] != 'O'){
+                            fflush(stdin);
+                            printf("Movimento invalido");
+                        }
+                        else if(abs(i4-i3) > 1){
+                            fflush(stdin);
+                            printf("Movimento invalido");
+                        }
+                        else{
+                            mov1(tab, j3, i3, j4, i4, t);
+                            troca(j1, j2, x1, x2, i1, i2, y1, y2);
+                        }
+                    }
+                }
+            }
+        }
+        else if(tab[i3][j3] == 'T'){          /*mlovimento para torre*/
+            if((j3 == j4) && (i3 != i4) || (j3 != j4) && (i3 == i4)){
+                mov1(tab, j3, i3, j4, i4, t);
+                troca(j1, j2, x1, x2, i1, i2, y1, y2);
+            }
+            else{
+                fflush(stdin);
+                printf("Movimento invalido");
+            }
+        }
+        else if(tab[i3][j3] == 'C'){          /*movimento para o cavalo*/
+            if((abs(j4-j3) == 2) && (abs(i4-i3) == 2) || (abs(j4-j3) == 4) && (abs(i4-i3) == 1)){
+                mov(tab, j3, i3, j4, i4, t);
+                troca(j1, j2, x1, x2, i1, i2, y1, y2);
+            }
+            else{
+                fflush(stdin);
+                printf("Movimento invalido");
+            }
+        }
+        else if(tab[i3][j3] == 'B'){          /*movimento para o bispo*/
+            if(2*(abs(i4-i3)) == (abs(j4-j3))){
+                mov1(tab, j3, i3, j4, i4, t);
+                troca(j1, j2, x1, x2, i1, i2, y1, y2);
+            }
+            else{
+                fflush(stdin);
+                printf("Movimento invalido");
+            }
+        }
+        else if(tab[i3][j3] == 'D'){          /*movimento para a dama*/
+            if((2*(abs(i4-i3)) == (abs(j4-j3))) || (j3 == j4) && (i3 != i4) || (j3 != j4) && (i3 == i4)){
+                mov1(tab, j3, i3, j4, i4, t);
+                troca(j1, j2, x1, x2, i1, i2, y1, y2);
+            }
+            else{
+                fflush(stdin);
+                printf("Movimento invalido");
+            }
+        }
+        else if(tab[i3][j3] == 'R'){          /*movimento para o rei*/
+            if((abs(j4-j3)<3 && abs(i4-i3)<2)){
+                mov(tab, j3, i3, j4, i4, t);
+                troca(j1, j2, x1, x2, i1, i2, y1, y2);
+                rei[0] += 1;
+            }
+            else if(((i3 == 0) || (i3 == 7)) && (j3 == 8) && (rei[0] == 0) && ((i4 == 0) || (i4 == 7)) && ((j4 == 4) || (j4 == 12))){
+                if((j4 == 12) && (i3 == 0) && (tab[0][14] == 'T') && (tab[0][12] == 'O') && (tab[0][10] == 'O')){
+                    mov(tab, j3, i3, j4, i4, t);
+                    troca(j1, j2, x1, x2, i1, i2, y1, y2);
+                    mov(tab, 14, 0, 10, 0, k);
+                }
+                else if((j4 == 12) && (i3 == 7) && (tab[7][14] == 'T') && (tab[7][12] == 'O') && (tab[7][10] == 'O')){
+                    mov(tab, j3, i3, j4, i4, t);
+                    troca(j1, j2, x1, x2, i1, i2, y1, y2);
+                    mov(tab, 14, 7, 10, 7, k);
+                }
+                else if((j4 == 4) && (i3 == 0) && (tab[0][0] == 'T') && (tab[0][2] == 'O') && (tab[0][4] == 'O') && (tab[0][6] == 'O')){
+                    mov(tab, j3, i3, j4, i4, t);
+                    troca(j1, j2, x1, x2, i1, i2, y1, y2);
+                    mov(tab, 0, 0, 6, 0, k);
+                }
+                else if((j4 == 4) && (i3 == 7) && (tab[7][0] == 'T') && (tab[7][2] == 'O') && (tab[7][4] == 'O') && (tab[7][6] == 'O')){
+                    mov(tab, j3, i3, j4, i4, t);
+                    troca(j1, j2, x1, x2, i1, i2, y1, y2);
+                    mov(tab, 0, 7, 6, 7, k);
+                }
+                else{
+                    fflush(stdin);
+                    printf("Movimento invalido");
+                }
+            }
+            else{
+                fflush(stdin);
+                printf("Movimento invalido");
+            }
+        }
+    }
+    else{
+        fflush(stdin);
+        printf("Turno do outro jogador no momento");
+    }
+}
+
+/*função para definir se algum rei desapareceu(xeque-mate)*/
+int fim(char tab[][16]){
+    int k, i, j, j1, t;
+    k=0;
+    for(i=0;i<8;i++){
+        for(j=0;j<16;j++){
+            if(tab[i][j] == 'R'){
+                k++;
+                j1=j+1;
+                if (tab[i][j1] == 'b'){
+                    k=k+2;
+                }
+                else{
+                    k=k+1;
+                }
+            }
+        }
+    }
+    return k;
+}
+
+int random_number(int min_num, int max_num){    /*função para gerar n[umero aleatorio(peguei a função na internet), mas não usei*/
+    int result=0,low_num=0,hi_num=0;
+    if(min_num<max_num){
+        low_num=min_num;
+        hi_num=max_num+1; // this is done to include max_num in output.
+        }
+        else{
+            low_num=max_num+1;// this is done to include max_num in output.
+            hi_num=min_num;
+        }
+    srand(time(NULL));
+    result = (rand()%(hi_num-low_num))+low_num;
+    return result;
+}

@@ -32,14 +32,14 @@ void main(){
     printf("|         O O OOO  OOO  O   O         |\n|         O O   O O   O O   O         |\n");
     printf("|         O OOOOO O   O OOOOO         |\n -------------------------------------\n\n");
     printf("Clique enter para continuar");
-    fgets(p, 100, stdin);
+    //fgets(p, 100, stdin); NÃO FUNFA NOS WINDOWS DEPOIS DO 7
     system("cls");
     printf("        INSTRUCOES:\n              '\n\n");
     printf("   -Primeira letra = tipo:\n\n      P = piao\n      T = torre\n      ");
     printf("C = cavalo\n      B = bispo\n      D = dama\n      R = rei\n\n\n");
     printf("   -Segunda letra = cor:\n\n      b = branca\n      p = preta\n\n");
     printf("-Se nao souber oque fazer, clique enter, ou algumas teclas depois enter\n\n\n\n\nClique enter para continuar\n");
-    fgets(p, 100, stdin);
+    //fgets(p, 100, stdin); NÃO FUNFA NOS WINDOWS DEPOIS DO 7
     system("cls");
     /*começo do jogo*/
     while(h[0] == 's'){
@@ -112,17 +112,17 @@ void main(){
                     system("cls");
                     printf("Movimento com valorez invalidos");
                 }
-                fgets(p, 100, stdin);
+                //fgets(p, 100, stdin); NÃO FUNFA NOS WINDOWS DEPOIS DO 7
                 system("cls");
             }
             if((fim(tab))==3){
                 printf("Xeque-Mate do branco\n");
-                fgets(p, 100, stdin);
+                //fgets(p, 100, stdin); NÃO FUNFA NOS WINDOWS DEPOIS DO 7
                 system("cls");
             }
             else{
                 printf("Xeque-Mate do preto\n");
-                fgets(p, 100, stdin);
+                //fgets(p, 100, stdin); NÃO FUNFA NOS WINDOWS DEPOIS DO 7
                 system("cls");
             }
             printf("Deseja continuar jogando?\n['s' para sim e qualquer valor para nao]\n");
@@ -155,7 +155,7 @@ void main(){
                         system("cls");
                         printf("Movimento com valorez invalidos");
                     }
-                    fgets(p, 100, stdin);
+                    //fgets(p, 100, stdin); NÃO FUNFA NOS WINDOWS DEPOIS DO 7
                     system("cls");
                     pc[0] = 0;
                 }
@@ -175,12 +175,12 @@ void main(){
             }
             if((fim(tab))==3){
                 printf("Xeque-Mate, voce ganhou\n");
-                fgets(p, 100, stdin);
+                //fgets(p, 100, stdin); NÃO FUNFA NOS WINDOWS DEPOIS DO 7
                 system("cls");
             }
             else{
                 printf("Xeque-Mate, voce perdeu\n");
-                fgets(p, 100, stdin);
+                //fgets(p, 100, stdin); NÃO FUNFA NOS WINDOWS DEPOIS DO 7
                 system("cls");
             }
             printf("Deseja continuar jogando?\n['s' para sim e qualquer valor para nao]\n");
@@ -213,7 +213,7 @@ void main(){
                         system("cls");
                         printf("Movimento com valorez invalidos");
                     }
-                    fgets(p, 100, stdin);
+                    //fgets(p, 100, stdin); NÃO FUNFA NOS WINDOWS DEPOIS DO 7
                     system("cls");
                     pc[0] = 0;
                 }
@@ -233,12 +233,12 @@ void main(){
             }
             if((fim(tab))==3){
                 printf("Xeque-Mate, voce perdeu\n");
-                fgets(p, 100, stdin);
+                //fgets(p, 100, stdin); NÃO FUNFA NOS WINDOWS DEPOIS DO 7
                 system("cls");
             }
             else{
                 printf("Xeque-Mate, voce ganhou\n");
-                fgets(p, 100, stdin);
+                //fgets(p, 100, stdin); NÃO FUNFA NOS WINDOWS DEPOIS DO 7
                 system("cls");
             }
             printf("Deseja continuar jogando?\n['s' para sim e qualquer valor para nao]\n");
